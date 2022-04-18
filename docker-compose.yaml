@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  spring_boot_with_mysql:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    image: spring_boot_with_mysql/api
+    ports:
+      - '8080:8080'
+      - '5005:5005'
+    environment:
+      - ADDITIONAL_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Xmx1G -Xms129m -XX:MaxMetaspaceSize=128m
+      - PROFILE=dev
+    links:
+      - db
+  db:
+    image: mysql
+    ports:
+      - '33061:3306'
+    environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE=spring_boot_mysql
+      - MYSQL_ROOT_PASSWORD=rootroot
+    volumes:
+      - ./docker/volume_mysql:/var/lib/mysql
