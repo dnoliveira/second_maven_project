@@ -21,8 +21,7 @@ public class Pessoa {
 
     @Column(name = "nome", length = 64)
     private String nome;
-
-
+    
     private Instant dataNascimento;
     private String cpf;
     private String telefone;
